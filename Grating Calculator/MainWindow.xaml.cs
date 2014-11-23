@@ -44,13 +44,13 @@ namespace Grating_Calculator
             try
             {
                 // Update values
-                double barHeight = double.Parse(barHeightBox.Text) / 1000;
-                double barThickness = double.Parse(barThicknessBox.Text) / 1000;
-                double barPitch = double.Parse(barPitchBox.Text) / 1000;
-                double span = double.Parse(spanBox.Text) / 1000;
-                double allowableStress = double.Parse(allowableStressBox.Text) * 1000000;
-                double youngsModulus = double.Parse(youngsModulusBox.Text) * 1000000000;
-                double limDeflection = double.Parse(limDeflectionBox.Text);
+                double barHeight = double.Parse(barHeightBox.Text.Replace(".", ",")) / 1000;
+                double barThickness = double.Parse(barThicknessBox.Text.Replace(".",",")) / 1000;
+                double barPitch = double.Parse(barPitchBox.Text.Replace(".", ",")) / 1000;
+                double span = double.Parse(spanBox.Text.Replace(".", ",")) / 1000;
+                double allowableStress = double.Parse(allowableStressBox.Text.Replace(".", ",")) * 1000000;
+                double youngsModulus = double.Parse(youngsModulusBox.Text.Replace(".", ",")) * 1000000000;
+                double limDeflection = double.Parse(limDeflectionBox.Text.Replace(".", ","));
 
                 // Calculate outputs
                 double inertia = Calculations.CalcInertia(barThickness, barHeight);
@@ -109,9 +109,10 @@ namespace Grating_Calculator
                 distDeflBox.Text = distDefl;
                 distMaxDeflBox.Text = distMaxDefl;
             }
-            catch
+            catch  (Exception e)
             {
                 MessageBox.Show("Invalid value detected.\nPlease ensure all values contain only numbers\nand correlate to the respective units shown.");
+                MessageBox.Show(e.ToString());
             }
         }
         public static class Calculations

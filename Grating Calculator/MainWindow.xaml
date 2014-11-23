@@ -66,6 +66,8 @@
 
             </Grid>
         </TabItem>
-        <TabItem Header="About"/>
+        <TabItem Header="About">
+            <Label Content="Application by Frank H. Louw&#xD;&#xA;&#xD;&#xA;Source code freely available at:&#xD;&#xA;&#xD;&#xA;https://github.com/Sukkalgirr/GratingCalculator.git&#xD;&#xA;&#xD;&#xA;MIT License; .NET Framework version 4.5.1 recommended." Margin="0,57,4,3"/>
+        </TabItem>
     </TabControl>
 </Window>
