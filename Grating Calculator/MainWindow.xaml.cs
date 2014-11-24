@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,14 +44,17 @@ namespace Grating_Calculator
         {
             try
             {
+
                 // Update values
-                double barHeight = double.Parse(barHeightBox.Text.Replace(".", ",")) / 1000;
-                double barThickness = double.Parse(barThicknessBox.Text.Replace(".",",")) / 1000;
-                double barPitch = double.Parse(barPitchBox.Text.Replace(".", ",")) / 1000;
-                double span = double.Parse(spanBox.Text.Replace(".", ",")) / 1000;
-                double allowableStress = double.Parse(allowableStressBox.Text.Replace(".", ",")) * 1000000;
-                double youngsModulus = double.Parse(youngsModulusBox.Text.Replace(".", ",")) * 1000000000;
-                double limDeflection = double.Parse(limDeflectionBox.Text.Replace(".", ","));
+                // Replace all periods with NumberFormatInfo.CurrentInfo.PercentDecimalSeparator to ensure compatibility
+
+                double barHeight = double.Parse(barHeightBox.Text.Replace(".", NumberFormatInfo.CurrentInfo.PercentDecimalSeparator)) / 1000;
+                double barThickness = double.Parse(barThicknessBox.Text.Replace(".", NumberFormatInfo.CurrentInfo.PercentDecimalSeparator)) / 1000;
+                double barPitch = double.Parse(barPitchBox.Text.Replace(".", NumberFormatInfo.CurrentInfo.PercentDecimalSeparator)) / 1000;
+                double span = double.Parse(spanBox.Text.Replace(".", NumberFormatInfo.CurrentInfo.PercentDecimalSeparator)) / 1000;
+                double allowableStress = double.Parse(allowableStressBox.Text.Replace(".", NumberFormatInfo.CurrentInfo.PercentDecimalSeparator)) * 1000000;
+                double youngsModulus = double.Parse(youngsModulusBox.Text.Replace(".", NumberFormatInfo.CurrentInfo.PercentDecimalSeparator)) * 1000000000;
+                double limDeflection = double.Parse(limDeflectionBox.Text.Replace(".", NumberFormatInfo.CurrentInfo.PercentDecimalSeparator));
 
                 // Calculate outputs
                 double inertia = Calculations.CalcInertia(barThickness, barHeight);
@@ -164,6 +168,15 @@ namespace Grating_Calculator
         private void CalculateButton_Click(object sender, RoutedEventArgs e)
         {
             UpdateValues();
+        }
+
+        private void KeyboardFocusHandler(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            var textBox = e.OriginalSource as TextBox;
+            if (textBox != null)
+            {
+                textBox.SelectAll();
+            }
         }
     }
 
